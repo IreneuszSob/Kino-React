@@ -30,7 +30,7 @@ const FilmyTable = ( props ) => {
                         <td>{item.mark}/10</td>
                         <td>
                             {/* <button onClick={() => onDelete(item)} className="btn btn-dark">Przejdz do filmu</button> */}
-                            <Link to={"/film/" + item.id}  className="btn btn-primary">Przedjdz do Filmu</Link>
+                            <Link to={"/details/" + item.id}  className="btn btn-primary">Przedjdz do Filmu</Link>
                         </td>
                     </tr>
                 ))}

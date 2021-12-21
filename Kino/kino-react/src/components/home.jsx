@@ -1,16 +1,14 @@
 import React from "react";
-import Data from "./data.json"
+import bootstrap from "bootstrap"
 
-const data = require('./data.json');
+// const data = require('./data.json');
 
 
 const Home = () => {
     return <div className="jumbotron jumbotron-fluid">
         <div className="container">
-            <h1 className="display-4">Home</h1>
-            <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, aut autem delectus ea
-                error esse est eveniet expedita fugiat illo libero magni maxime mollitia optio quasi ratione rem
-                repellendus </p>
+            <h1 className="display-4">FILM INFO</h1>
+            <p className="lead">Witamy na FilmInfo.pl  </p>
                 
         </div>
     </div>;
