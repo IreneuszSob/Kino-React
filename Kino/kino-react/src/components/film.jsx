@@ -1,43 +1,102 @@
 
-import React, { Component } from 'react';
-import { Container, Row, Col, Nav } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import react from 'react';
+import React, {Component} from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+const axios = require('axios');
+
+//import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
+
+/*const Film = (props) => {
+    return(
+        <div className="container">
+            <div className = "row">
+                <div className = "sm-col-8">
+                    <h2>{this.state.title} ({this.state.year})</h2>
+                    <text>{this.state.desc}</text>
+                </div>
+            </div>
+        </div>
+    )
+}*/
 
 
-class Film extends Component {
 
-	constructor(props) {
-		super(props);
-		this.Id = this.props.match.params.id;
-		this.film = require('./data.json').Filmy.find((m) => m.id === Number(this.Id));
-	}
+class Film extends Component{
 
-    render() {
-        return (
-            <table className="table">
-            <thead>
-            <tr>
-                <th scope="col">Tytuł</th>
-                <th scope="col">Plakat</th>
-                <th scope="col">Opis</th>
-                <th scope="col">Ocena</th>
-                
-                
-                
-            </tr>
-            </thead>
-            <tbody>
-            
-            
-            <td><img style={{width: '150px', height: '250px'}} src={this.film.image} alt="1"/></td>
-            <td>{this.film.title}</td>
-            <td>{this.film.text}</td>
-            <td>{this.film.mark}</td>
-                        
-            </tbody>
-        </table>
-                
+    state = {
+        films: {
+            title: "", 
+            image: "",
+            content: ""
+        }
+    };
 
-        )}
-}
+    constructor(props){
+        super(props);
+        this.movieId = this.props.match.params.id;
+        console.log(this.movieId);
+        /*this.films = {
+            title: "",
+            image: "",
+            content: ""
+        };*/
+    };
+
+    async componentDidMount() {
+        await axios.get('https://pr-movies.herokuapp.com/api/movies/' + this.movieId)
+            .then(res => {
+                const film = res.data;
+                this.state.films.title = film.title ;
+                this.state.films.image = film.image ;
+                this.state.films.content = film.content ;
+            });
+        console.log(this.state.films);
+        console.log("jeden");
+        this.setState(this.state.films);
+    }
+
+    render(){
+        console.log("dwa");
+        return(
+            <div className="container" style={styles.container}>
+                <div className = "row">
+                    <div className = "sm-col-8">
+                        <img src={this.state.films.image} className="img-fluid" style={styles.image}/>
+                        <h2 style={{color: 'white', padding: 10}}>{this.state.films.title}</h2>
+                        <p style={{color: 'white'}}>{this.state.films.content}</p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+};
+
+var styles = {
+    container: {
+      marginTop:50,
+      padding: 20,
+      backgroundColor: "black",
+      width: "70%",
+      borderRadius: 30,
+      borderWidth: 5,
+    },
+    title: {
+      marginTop: 16,
+      paddingVertical: 8,
+      borderWidth: 4,
+      borderColor: "#20232a",
+      borderRadius: 6,
+      backgroundColor: "#61dafb",
+      color: "#20232a",
+      textAlign: "center",
+      fontSize: 30,
+      fontWeight: "bold"
+    },
+    image: {
+        padding: 0,
+        width: "500px"
+    }
+  };
 
 export default Film;
